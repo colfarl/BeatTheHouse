@@ -1,2 +1,7 @@
 .venv
 .env
+tests
+etl/explore.py
+etl/fetch.py
+etl/fetch2023.py
+db/test_query.sql
