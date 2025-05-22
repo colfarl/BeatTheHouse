@@ -4,4 +4,8 @@ tests
 etl/explore.py
 etl/fetch.py
 etl/fetch2023.py
+etl/utils/baseball_shapes.py
 db/test_query.sql
+
+__pycache__/
+*.pyc
