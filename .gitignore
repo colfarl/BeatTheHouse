@@ -9,3 +9,5 @@ db/test_query.sql
 
 __pycache__/
 *.pyc
+batting_data/
+pitching_data/
