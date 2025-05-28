@@ -217,13 +217,13 @@ CREATE TABLE IF NOT EXISTS savant_pitcher_stats (
     popups_percent NUMERIC(5, 2),
     n INTEGER,
     arm_angle NUMERIC(5, 2),
-    n_fastball_formatted INTEGER,
+    n_fastball_formatted INTEGER, -- Altered to Numeric
     fastball_avg_speed NUMERIC(5, 2),
     fastball_avg_spin NUMERIC(7, 2),
-    n_breaking_formatted INTEGER,
+    n_breaking_formatted INTEGER, -- Altered to Numeric
     breaking_avg_speed NUMERIC(5, 2),
     breaking_avg_spin NUMERIC(7, 2),
-    n_offspeed_formatted INTEGER,
+    n_offspeed_formatted INTEGER, -- Altered to Numeric
     offspeed_avg_speed NUMERIC(5, 2),
     offspeed_avg_spin NUMERIC(7, 2),
     PRIMARY KEY (player_id, year)

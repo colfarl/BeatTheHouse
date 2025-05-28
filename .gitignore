@@ -6,6 +6,7 @@ etl/fetch.py
 etl/fetch2023.py
 etl/utils/baseball_shapes.py
 db/test_query.sql
+etl/box_score_dict.txt
 
 __pycache__/
 *.pyc

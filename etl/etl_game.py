@@ -25,29 +25,6 @@ def insert_games(conn, games):
         execute_values(cur, query, games)
     conn.commit()
 
-def safe_boxscore_data(gamePk, max_retries=5, delay=2):
-    for attempt in range(max_retries):
-        try:
-            return statsapi.boxscore_data(gamePk)
-        except requests.exceptions.RequestException as e:
-            print(f"Retrying gamePk {gamePk} due to error: {e}")
-            time.sleep(delay * (attempt + 1))  # exponential backoff
-    print(f"Failed to retrieve gamePk {gamePk} after {max_retries} attempts")
-    return None
-
-def safe_get_schedule(year, retries=3, delay=5):
-    for attempt in range(retries):
-        try:
-            return statsapi.schedule(
-                start_date=f"{year}-03-01",
-                end_date=f"{year}-11-30"
-            )
-        except requests.exceptions.RequestException as e:
-            print(f"Retry {attempt+1} for year {year} due to error: {e}")
-            time.sleep(delay * (attempt + 1))  # Exponential backoff
-    print(f"Failed to retrieve schedule for {year}")
-    return []
-
 
 if __name__ == "__main__":
     all_games = []
@@ -88,3 +65,4 @@ if __name__ == "__main__":
         insert_games(conn, all_games)
         all_games = []
         time.sleep(10)
+    conn.close()
