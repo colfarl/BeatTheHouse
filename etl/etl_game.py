@@ -29,7 +29,7 @@ def insert_games(conn, games):
 if __name__ == "__main__":
     all_games = []
     conn = psycopg2.connect(DSN)
-    for year in range(2019, 2026):
+    for year in range(2025, 2026):
         schedule = safe_get_schedule(year)
         for game in schedule:
             if game['status'] != "Final":

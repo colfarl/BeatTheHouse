@@ -12,3 +12,4 @@ __pycache__/
 *.pyc
 batting_data/
 pitching_data/
+odds_data/

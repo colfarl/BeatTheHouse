@@ -229,3 +229,33 @@ CREATE TABLE IF NOT EXISTS savant_pitcher_stats (
     PRIMARY KEY (player_id, year)
 );
 
+
+-- Basic Odds
+
+/* ─────────── DIMENSION – sportsbook odds lines  ─────────── */
+CREATE TABLE IF NOT EXISTS odds_source (
+    source_id     SMALLSERIAL PRIMARY KEY,
+    src_name      TEXT UNIQUE NOT NULL,   -- e.g. 'Kaggle-Historic-Odds'
+    src_notes     TEXT
+);
+
+/* ─────────── FACT – one row per game / book  ─────────── */
+CREATE TABLE IF NOT EXISTS game_odds (
+    gamePk               BIGINT      REFERENCES game (gamePk) ON DELETE CASCADE,
+    source_id            SMALLINT    REFERENCES odds_source (source_id) ON DELETE CASCADE,
+    -- ------------- money-line -------------
+    away_money_line      SMALLINT,
+    home_money_line      SMALLINT,
+    -- ------------- point spread ----------
+    away_spread          NUMERIC(4,1),
+    away_spread_line     SMALLINT,
+    home_spread          NUMERIC(4,1),
+    home_spread_line     SMALLINT,
+    -- ------------- totals -----------------
+    over_under           NUMERIC(4,1),
+    over_line            SMALLINT,
+    under_line           SMALLINT,
+    -- ------------- convenience flags -----
+    created_at           TIMESTAMPTZ DEFAULT now(),
+    PRIMARY KEY (gamePk, source_id)
+);

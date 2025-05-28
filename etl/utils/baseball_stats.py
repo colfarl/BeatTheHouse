@@ -119,6 +119,18 @@ def safe_get_schedule(year, retries=3, delay=5):
     print(f"Failed to retrieve schedule for {year}")
     return []
 
+def safe_get_games_in_range(start, end, retries=3, delay=5):
+    for attempt in range(retries):
+        try:
+            return statsapi.schedule(
+                start_date=start,
+                end_date=end
+            )
+        except requests.exceptions.RequestException as e:
+            print(f"Retry {attempt+1} for year  due to error: {e}")
+            time.sleep(delay * (attempt + 1))  # Exponential backoff
+    print(f"Failed to retrieve schedule for {start} - {end}")
+    return []
 
 def get_all_game_pks(dsn: str) -> List[int]:
     """

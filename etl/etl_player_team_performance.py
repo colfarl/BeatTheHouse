@@ -4,14 +4,18 @@ from psycopg2 import connect
 from dotenv import load_dotenv
 from utils.baseball_stats import * 
 from contextlib import closing
+from datetime import date
 
 if __name__ == "__main__":
     load_dotenv()
     DSN = os.getenv("POSTGRES_URI")
 
-    game_pks = get_all_game_pks(DSN)          # all gamePk’s already in `game`
-    player_cache: set[int] = set()            # avoid re-hitting /people for known players
+    start = date(2025, 5, 1)     # YYYY, MM, DD
+    end   = date(2025, 5, 28)
 
+    games = safe_get_games_in_range(start, end)         # all gamePk’s already in `game`
+    player_cache: set[int] = set()            # avoid re-hitting /people for known players
+    game_pks = [game['game_id'] for game in games]
     BATCH_SIZE  = 250                         # commit after this many games
     SLEEP_SEC   = 0.20                        # polite pause between calls
 
